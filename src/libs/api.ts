@@ -21,5 +21,12 @@ export const api = {
                 resolve({ error: '' });
             }, 1000);
         });
+    },
+    redefinePassword: async (password: string , toke: string): Promise<{ error: string }> => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve({ error: '' });
+            }, 1000);
+        });
     }
 }
