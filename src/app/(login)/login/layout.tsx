@@ -16,7 +16,7 @@ const Loyout = ({ children } : Props) => {
             <body>
                 <Container component="main" maxWidth="xs">
                     <Box sx={{
-                        mt: 9,
+                        mt: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center'
