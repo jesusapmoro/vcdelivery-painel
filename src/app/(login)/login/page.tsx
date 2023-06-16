@@ -1,6 +1,7 @@
 "use client";
 
 
+import { api } from "@/libs/api";
 import { Box, Button, TextField, Typography, Link as MuiLink, Alert } from "@mui/material";
 import Link from "next/link";
 import { useState, FormEvent } from "react";
@@ -13,7 +14,7 @@ const Page = () => {
 
     //prevençao(parar) do evento padrão que atualizar a pagina(event: FormEvent<HTMLFormElement>)
     //dizendo que o elemento é proprio do form
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // !(se não timer emai ou senha)
@@ -25,6 +26,11 @@ const Page = () => {
         setError(''); //limpa os erros de tentativas anteriores
         setLoading(true);
         //fazer a consulta na API
+        const result = await api.login(emailField, passwordField);
+        setLoading(false);
+        if(result.error) {
+            setError(result.error);
+        }
     }
 
     return(
