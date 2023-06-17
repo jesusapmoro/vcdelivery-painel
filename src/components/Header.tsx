@@ -2,9 +2,12 @@ import { Menu } from "@mui/icons-material";
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { HeaderDrawer } from "./HeaderDrawer";
+import { use, useState } from "react";
 
 export const Header = () => {
     const router = useRouter();
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const pageTitle = "Painel VcDelivery";
 
@@ -13,7 +16,7 @@ export const Header = () => {
     }
 
     const handleDrawerTogget = () => {
-
+        setDrawerOpen(!drawerOpen); //inverter a state
     }
 
     return (
@@ -51,6 +54,14 @@ export const Header = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Box component="nav">
+                <HeaderDrawer
+                    open={drawerOpen}
+                    onClose={handleDrawerTogget}
+                    title={pageTitle}
+                    onLogout={handleLogout}
+                />
+            </Box>
         </>
     );
 }
