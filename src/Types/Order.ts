@@ -13,7 +13,7 @@ export type Order = {
     paymentType: 'card' | 'money';
     changeValue?: number;
     cupom?: string;
-    cupomDiscont?: number;
+    cupomDiscount?: number;
     products: CartItem[];
     subtotal: number;
     total: number;
