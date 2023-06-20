@@ -6,12 +6,13 @@ import { OrderItem } from "@/components/OrderItem";
 import { api } from "@/libs/api";
 import { Refresh, Search } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Grid, InputAdornment, Skeleton, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 
 const Page = () => {
     const [searchInput, setSearchInput] = useState('');
     const [loading, setLoading] = useState(false);
-    const [orders, setOrdes] = useState<Order[]>([]);
+    const [orders, setOrdes] = useState<Order[]>([]);//backup
+    const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
 
     const getOrdes = async () => {
         setSearchInput('');
@@ -26,12 +27,30 @@ const Page = () => {
         getOrdes();
     }, []);
 
-    const handleSearchInput = () => {
+    useEffect(() => {
+        setSearchInput('');
+        setFilteredOrders(orders);
+    }, [orders]);
 
-    }
+    //event.code para saber qual tecla foi apertada
+    const handleSearchKey = (event: KeyboardEvent<HTMLInputElement>) => {
+        //toLowerCase - converte p/ minusculo
+        if(event.code.toLowerCase() === 'enter') {
+            if(searchInput != '') {
+                //nova listagem de pedidos
+                let newOrders: Order[] = [];
 
-    const handleSearchKey = () => {
+                for(let i in orders) {
+                    if(orders[i].id.toString() === searchInput) {
+                        newOrders.push(orders[i]);
+                    }
+                }
 
+                setFilteredOrders(newOrders);
+            } else {
+                setFilteredOrders(orders);
+            }
+        }
     }
 
     const handleChangeStatus = async (id: number, newStatus: OrderStatus) => {
@@ -57,7 +76,7 @@ const Page = () => {
                 </Box>
                 <TextField
                     value={searchInput}
-                    onChange={handleSearchInput}
+                    onChange={e => setSearchInput(e.target.value)}
                     onKeyUp={handleSearchKey}//quando apertar o enter atualizar
                     placeholder="Pesquise um pedido"
                     variant="standard"
@@ -90,7 +109,7 @@ const Page = () => {
                         </Grid>
                     </>
                 }
-                {!loading && orders.map((item, index) => (
+                {!loading && filteredOrders.map((item, index) => (
                      <Grid key={index} item xs={1}>
                         <OrderItem 
                             item={item}
