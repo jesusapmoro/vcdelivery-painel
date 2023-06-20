@@ -1,6 +1,7 @@
 "use client";
 
 import { Order } from "@/Types/Order";
+import { OrderStatus } from "@/Types/OrderStatus";
 import { OrderItem } from "@/components/OrderItem";
 import { api } from "@/libs/api";
 import { Refresh, Search } from "@mui/icons-material";
@@ -31,6 +32,11 @@ const Page = () => {
 
     const handleSearchKey = () => {
 
+    }
+
+    const handleChangeStatus = async (id: number, newStatus: OrderStatus) => {
+        await api.changeOrderStatus(id, newStatus); //fazer uma requiçãona api
+        getOrdes(); // atualiza a pagina
     }
 
     return(
@@ -88,6 +94,7 @@ const Page = () => {
                      <Grid key={index} item xs={1}>
                         <OrderItem 
                             item={item}
+                            onChangeStatus={handleChangeStatus}
                         />
                      </Grid>
                 ))}

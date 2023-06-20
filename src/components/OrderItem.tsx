@@ -1,12 +1,13 @@
 import { Order } from "@/Types/Order"
 import { OrderStatus } from "@/Types/OrderStatus";
-import { Box, Button, Typography } from "@mui/material"
+import { Box, Button, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material"
 
 type Props = {
     item: Order;
+    onChangeStatus: (id: number, newStatus: OrderStatus) => void;
 }
 
-export const OrderItem = ({ item } : Props) => {
+export const OrderItem = ({ item, onChangeStatus } : Props) => {
 
     const getStatusBackground = (status: OrderStatus) => {
         const statues = {
@@ -15,6 +16,11 @@ export const OrderItem = ({ item } : Props) => {
             delivered: '#999999'
         }
         return statues[status];
+    }
+
+    //pegar o statos que selecionou
+    const handleStatusChange = (event: SelectChangeEvent) => {
+        onChangeStatus(item.id, event.target.value as OrderStatus);
     }
 
     return (
@@ -35,7 +41,18 @@ export const OrderItem = ({ item } : Props) => {
                 <Typography component="p" sx={{ fontSize: 24 }}>#{item.id}</Typography>
                 </Box>
             </Box>
-            
+            <Box sx={{ p: 1, backgroundColor: '#EEE'}}>
+                <Select
+                    variant="standard"
+                    value={item.status}
+                    fullWidth
+                    onChange={handleStatusChange}
+                >
+                    <MenuItem value="preparing">Preparando</MenuItem>
+                    <MenuItem value="sent">Enviado</MenuItem>
+                    <MenuItem value="delivered">Entregue</MenuItem>
+                </Select>
+            </Box>
         </Box>
     );
 }
