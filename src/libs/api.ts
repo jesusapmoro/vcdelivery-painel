@@ -51,8 +51,7 @@ export const api = {
                 const orders: Order[] = [];
                 const statuses: OrderStatus[] = ['preparing', 'sent', 'delivered'];
 
-                //TODO: montar array de pedidos
-                for(let i=0;1<6;i++) {
+                for(let i=0;i<6;i++) {
                     orders.push({
                         id: parseInt('12' + i),
                         status: statuses[Math.floor(Math.random() * 3)],
@@ -80,10 +79,9 @@ export const api = {
                         ],
                         subtotal: 99,
                         total: 120
-                    })
+                    });
 
                 }
-
                 resolve(orders);
             }, 1000);
         });
