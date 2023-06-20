@@ -1,5 +1,6 @@
 import { Order } from "@/Types/Order"
 import { OrderStatus } from "@/Types/OrderStatus";
+import { BorderBottom } from "@mui/icons-material";
 import { Box, Button, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material"
 
 type Props = {
@@ -52,6 +53,21 @@ export const OrderItem = ({ item, onChangeStatus } : Props) => {
                     <MenuItem value="sent">Enviado</MenuItem>
                     <MenuItem value="delivered">Entregue</MenuItem>
                 </Select>
+            </Box>
+            <Box sx={{ p: 1, backgroundColor: '#FFF' }}>
+                {item.products.map((productItem, index) => (
+                    <Typography
+                        key={index}
+                        component="p"
+                        sx={{
+                            p: 1,
+                            color: '#000',
+                            fontWeight: 'bold',
+                            borderBottom: '1px solid #CCC'
+                        }}
+                    >{`${productItem.qt}x ${productItem.product.name}`}</Typography>
+                ))}
+
             </Box>
         </Box>
     );
