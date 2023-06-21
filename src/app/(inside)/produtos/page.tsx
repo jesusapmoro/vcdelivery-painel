@@ -5,6 +5,7 @@ import { Order } from "@/Types/Order";
 import { OrderStatus } from "@/Types/OrderStatus";
 import { Product } from "@/Types/Product";
 import { OrderItem } from "@/components/OrderItem";
+import { ProductEditDialog } from "@/components/ProductEditDialog";
 import { ProductTableItem } from "@/components/ProductTableItem";
 import { ProductTableSkelecton } from "@/components/ProductTableSkeleton";
 import { api } from "@/libs/api";
@@ -25,6 +26,11 @@ const Page = () => {
     //state para desabilitar os boton delete e edit
     const [loadingDelete, setLoadingDelete] = useState(false);
 
+    //state modal ProductEditDialog edit e novo produto
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [productToEdit, setProductToEdit] = useState<Product>();
+    const [loadingEditDialog, setLoadingEditDialog] = useState(false);
+
     useEffect(() => {
         getProducts();
     }, []);
@@ -35,11 +41,6 @@ const Page = () => {
         setCategories( await api.getCategories());
         setLoading(false);
     }
-
-    const handleNewProduct = () => {}
-
-    const handleEditProduct = (product: Product) => { }
-     
 
     // Delete Product
     const handleDeleteProduct = (product: Product) => {
@@ -56,6 +57,20 @@ const Page = () => {
             getProducts();//carregar os produtos na tela
         }
     }
+
+    //New/Edit Product
+    const handleNewProduct = () => {
+        setProductToEdit(undefined);//tira tudo da tela de edição
+        setEditDialogOpen(true);//abre o dialog de edição
+    }
+
+    const handleEditProduct = (product: Product) => {
+        setProductToEdit(product);
+        setEditDialogOpen(true);
+    }
+
+    const handleSaveEditDialog = () => { }
+     
 
     return(
         <>
@@ -107,6 +122,15 @@ const Page = () => {
                         <Button disabled={loadingDelete} onClick={handleConfirmDelete}>Sim</Button>
                     </DialogActions>
                 </Dialog>
+
+                <ProductEditDialog 
+                    open={editDialogOpen}
+                    onClose={() => setEditDialogOpen(false)}
+                    onSave={handleSaveEditDialog}
+                    disabled={loadingEditDialog}
+                    product={productToEdit}
+                    categories={categories}
+                />
             </Box>
         </>
     );
