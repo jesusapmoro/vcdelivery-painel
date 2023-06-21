@@ -1,3 +1,4 @@
+import { Category } from "@/Types/Category";
 import { Order } from "@/Types/Order";
 import { OrderStatus } from "@/Types/OrderStatus";
 import { Product } from "@/Types/Product";
@@ -88,5 +89,34 @@ export const api = {
     },
     changeOrderStatus: async (id: number, newStatus: OrderStatus) => {
         return true;
+    },
+    getCategories: async (): Promise<Category[]> => {
+        const list: Category[] = [
+            { id: 99, name: 'Burgers' },
+            { id: 98, name: 'Refrigerante' },
+            { id: 97, name: 'Doces'} 
+        ];
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(list);
+            }, 200);
+        })
+    },
+    getProducts: async (): Promise<Product[]> => {
+        const list: Product[] = [
+            {...tmpProduct, id: 123},
+            {...tmpProduct, id: 124},
+            {...tmpProduct, id: 125},
+            {...tmpProduct, id: 126},
+            {...tmpProduct, id: 127},
+            {...tmpProduct, id: 128},
+            {...tmpProduct, id: 129},
+            {...tmpProduct, id: 130}
+        ];
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(list);
+            }, 500);
+        })
     }
 }

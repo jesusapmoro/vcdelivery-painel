@@ -1,7 +1,9 @@
 "use client";
 
+import { Category } from "@/Types/Category";
 import { Order } from "@/Types/Order";
 import { OrderStatus } from "@/Types/OrderStatus";
+import { Product } from "@/Types/Product";
 import { OrderItem } from "@/components/OrderItem";
 import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
@@ -11,6 +13,19 @@ import { KeyboardEvent, useEffect, useState } from "react";
 
 const Page = () => {
     const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    const getProducts = async () => {
+        setLoading(true);
+        setProducts(await api.getProducts());
+        setCategories( await api.getCategories());
+        setLoading(false);
+    }
 
     const handleNewProduct = () => {}
 
