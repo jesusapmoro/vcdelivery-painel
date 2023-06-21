@@ -156,11 +156,11 @@ const Page = () => {
                         <Box>Estado: {printOrder.shippingAddress.state}</Box>
 
                         <Typography component="h5" variant="h5">Itens</Typography>
-                        {printOrder.products.map((item, index) => {
+                        {printOrder.products.map((item, index) => (
                             <Box key={index}>
-                                {item.qt}x {item.product.name}
+                                {item.qt} x {item.product.name}
                             </Box>
-                        })}
+                        ))}
                     </>
                 }
             </Box>
