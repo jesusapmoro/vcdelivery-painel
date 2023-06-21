@@ -12,7 +12,7 @@ import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
 import { Refresh, Search } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, InputAdornment, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 
 const Page = () => {
     const [loading, setLoading] = useState(false);
@@ -69,7 +69,21 @@ const Page = () => {
         setEditDialogOpen(true);
     }
 
-    const handleSaveEditDialog = () => { }
+    const handleSaveEditDialog =async (event: FormEvent<HTMLFormElement>) => {
+        let form= new FormData(event.currentTarget);//formData(p/enviar image e texto)//event.currentTarget(pega os elementos do formulário)
+
+        setLoadingEditDialog(true);
+        if(productToEdit) {
+            form.append('id', productToEdit.id.toString());//antes de enviar tenho que pegar o id do produto
+            await api.updateProduct(form);
+        } else {
+            await api.createProduct(form);
+        }
+        setLoadingEditDialog(false);
+        setEditDialogOpen(false);
+
+        getProducts();
+    }
      
 
     return(
