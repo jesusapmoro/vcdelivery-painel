@@ -5,6 +5,7 @@ import { Order } from "@/Types/Order";
 import { OrderStatus } from "@/Types/OrderStatus";
 import { Product } from "@/Types/Product";
 import { OrderItem } from "@/components/OrderItem";
+import { ProductTableSkelecton } from "@/components/ProductTableSkeleton";
 import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
 import { Refresh, Search } from "@mui/icons-material";
@@ -49,7 +50,13 @@ const Page = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-
+                        {loading && 
+                            <>
+                                <ProductTableSkelecton />
+                                <ProductTableSkelecton />
+                                <ProductTableSkelecton />
+                            </>
+                        }
                     </TableBody>
                 </Table>
 
